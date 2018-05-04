@@ -7,7 +7,6 @@ import datetime
 # Import the employee_data1.csv and employee_data2.csv files
 
 filepath = os.path.join("PyBoss", "employee_data1.csv")
-filepath = os.path.join("PyBoss", "employee_data2.csv")
 
 converted_employee_data = []
 
