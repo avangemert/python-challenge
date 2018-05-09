@@ -13,61 +13,50 @@ with open(filepath) as csvfile:
     total = 0
     next(csvreader)
 
-    revenues = [int(row[1]) for row in csvreader]
-    dates = [int(row[0]) for row in csvreader]
+    revenues = [float(row[1]) for row in csvreader]
+    dates = [float(row[0]) for row in csvreader]
 
     # Calculate total # of months
     totalMonths = len(revenues)
 
     # Calculate total revenue
     sum_rev = sum(revenues)
-    
-    # Determine change from month to month
-    rev_change = []
-    
-    for i in range(len(revenues)-1):
-        rev_change.append(revenues[i+1] - revenues[i]) 
-        
-    # Determine Average Revenue Change
-    tot_rev_change = sum(rev_change) 
-    avg_rev_change = tot_rev_change / (totalMonths - 1)
-    
-    # Determine greatest revenue increase
-    max_rev_change = max(rev_change)
 
-    # Determine month of greatest revenue increase
-    index_max_month = rev_change.index(max_rev_change)
-   
-    # Below, I apply the logic of apply the index of 39 to the dates. Unfortunately, I got an IndexError.
-    # max_month = dates[index_max_month]
+    # Find average change in revenue
+    avg_rev = sum_rev / totalMonths
 
-
-    # Determine greatest revenue decrease
-    min_rev_change = min(rev_change)
-
-    # Determine month of greatest revenue decrease
-    index_min_month = rev_change.index(min_rev_change)
+    # Find greatest increase in revenue
+    max_rev = max(revenues)
     
-    # min_month = dates[index_min_month]
+    # Get the max revenue index
+    max_rev_index = revenues.index(max_rev)
+
+    # Apply the max revenue index to the Dates column.
+    # Note from Allison: I haven't figured this out yet.    
     
+    # Get the greatest decrease in revenue
+    min_rev = min(revenues) 
+
+    # Get the min revenue index
+    min_rev_index = revenues.index(min_rev)
+
     print("Financial Analysis")  
     print( "----------------------------")      
     print("Total Months: " + str(totalMonths))      
-    print("Total Revenue: $" + str(sum_rev))   
-    print("Average Revenue Change: $" + str(avg_rev_change))    
-    print("Greatest Increase in Revenue: $" + str(max_rev_change))
-    print("Greatest Decrease in Revenue: $" + str(min_rev_change))    
+    print("Total Revenue: " + str(sum_rev))
+    print("Average Revenue Change: " + str(avg_rev))    
+    print("Greatest Increase in Revenue: " + str(max_rev))
+    print("Greatest Decrease in Revenue: " + str(min_rev))    
 
     # Write results to txt file
-    f = open("Financial Analysis.txt", "w")
-    print >>f,("Financial Analysis")  
-    print >>f,( "----------------------------")      
-    print >>f,("Total Months: " + str(totalMonths))      
-    print >>f,("Total Revenue: " + str(sum_rev))
-    print >>f,("Average Revenue Change: " + str(avg_rev_change))    
-    print >>f,("Greatest Increase in Revenue: " + str(max_rev_change))
-    print >>f,("Greatest Decrease in Revenue: " + str(min_rev_change))
 
-    f.close()
-
+    csvpath = os.path.join("Financial Analysis")
+    with open(csvpath, "w") as txtfile:
+        txtfile.write("Financial Analysis\n")
+        txtfile.write("----------------------------\n")
+        txtfile.write("Total Months: " + str(totalMonths)+"\n")
+        txtfile.write("Total Revenue: " + str(sum_rev)+"\n")
+        txtfile.write("Average Revenue Change: " + str(avg_rev)+"\n")
+        txtfile.write("Greatest Increase in Revenue: " + str(max_rev)+"\n")
+        txtfile.write("Greatest Decrease in Revenue: " + str(min_rev)+"\n")
     
